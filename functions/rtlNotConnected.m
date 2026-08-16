@@ -1,12 +1,12 @@
 function rtlNotConnected(app)
     app.WarningsLabel.Text = 'CONNECT RTL-SDR';
+    app.WarningsLabel.FontColor = 'red';
     app.WarningsLabel.Visible = 'on';
-    drawnow;
-
     if app.isAccumulating
-        toggleAccumulate();
+        toggleAccumulate(app);
     end
     if app.isScanning
-        toggleScan();
+        toggleScan(app);
     end
+    drawnow;
 end
