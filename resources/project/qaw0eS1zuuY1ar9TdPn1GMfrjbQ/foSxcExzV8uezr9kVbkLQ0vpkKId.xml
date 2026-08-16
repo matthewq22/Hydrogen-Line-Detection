@@ -6,4 +6,7 @@
     <Category UUID="Deployment_Category_5d39d216-7ce7-4606-a163-5dc4679f0e5a">
         <Label UUID="Deployment_MainFile_5d39d216-7ce7-4606-a163-5dc4679f0e5a"/>
     </Category>
+    <Category UUID="Deployment_Category_7f5a52d6-4644-49de-b033-2141adf4df29">
+        <Label UUID="Deployment_MainFile_7f5a52d6-4644-49de-b033-2141adf4df29"/>
+    </Category>
 </Info>

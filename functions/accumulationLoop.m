@@ -1,9 +1,10 @@
 function accumulationLoop(app)
-            % Loop to run while in the accumulation phase
+            % To be run when in accumulation phase
             app.StartCalibrationButton.Enable = 'off';
             data = zeros(app.fftSize, 1);
             count = 0;
             while app.isAccumulating
+                % Check if the RTL-SDR is still connected, every few cycles
                 if mod(count, 200) == 0
                     doCheck = true;
                 else
@@ -15,12 +16,14 @@ function accumulationLoop(app)
                 count = count + 1;
                 plot(app.UIAxes, app.freq, data / count);
                 drawnow limitrate;
+
                 if app.closeReq
                     onClose(app);
                     break
                 end
             end
             if isvalid(app)
+                % Allow calibration only once everything is stopped
                 app.StartCalibrationButton.Enable = 'on';
             end
         end

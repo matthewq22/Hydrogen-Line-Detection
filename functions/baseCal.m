@@ -1,5 +1,6 @@
 function success = baseCal(app, time)
-    
+    % Function to find the average background vector
+
     frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
     numFrames = time / frameLength;
     
@@ -10,6 +11,7 @@ function success = baseCal(app, time)
     
     for i=1:numFrames
         if mod(i, 50) == 0
+            % Check if the RTL-SDR is still connected
             info = sdrinfo(app.sdr.RadioAddress);
             if isempty(info)
                 rtlNotConnected(app);

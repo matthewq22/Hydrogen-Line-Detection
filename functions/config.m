@@ -1,4 +1,5 @@
 function sdrConnected = config(app)
+    % Configure the RTL-SDR
     app.centreFreq = app.CentreFrequencySlider.Value * 10^6;
     app.fftSize = str2double(app.FFTSizeDropDown.Value);
     app.window = hann(app.fftSize);

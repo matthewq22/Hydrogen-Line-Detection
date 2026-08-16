@@ -1,4 +1,5 @@
 function calibrate(app)
+    % To be run on calibrate being pressed: sets up everything needed
     app.ScanButton.Enable = 'off';
     app.AccumulateButton.Enable = 'off';
     app.StartCalibrationButton.Enable = 'off';
@@ -6,13 +7,15 @@ function calibrate(app)
 
     cla(app.UIAxes);
 
+    % Stop all processes
     if app.isScanning
         toggleScan(app);
     end
     if app.isAccumulating
         toggleAccumulate(app);
     end
-
+    
+    % Configure the RTL-SDR
     ready = config(app);
 
     if ready
