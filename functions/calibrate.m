@@ -1,0 +1,47 @@
+function calibrate(app)
+    app.ScanButton.Enable = 'off';
+    app.AccumulateButton.Enable = 'off';
+    app.StartCalibrationButton.Enable = 'off';
+    drawnow;
+
+    cla(app.UIAxes);
+
+    if app.isScanning
+        toggleScan(app);
+    end
+    if app.isAccumulating
+        toggleAccumulate(app);
+    end
+
+    ready = config(app);
+
+    if ready
+        app.WarningsLabel.FontColor = 'black';
+        app.WarningsLabel.Text = "Calibrating";
+        app.WarningsLabel.Visible = 'on';
+        integrationTime = app.CalibrationtimeEditField.Value;
+        drawnow;
+
+        % Get the baseline vector
+        success = baseCal(app, integrationTime);
+
+        if success
+            % Plotting
+            plot(app.UIAxes, app.freq, 10*log10(app.avgBg));
+            if app.plotLine
+                xline(app.UIAxes, app.targetFreq, Color='r', LineWidth=1.5);
+            end
+            xlim(app.UIAxes, [min(app.freq) max(app.freq)]);
+            
+            app.ScanButton.Enable = 'on';
+            app.AccumulateButton.Enable = 'on';
+            app.StartCalibrationButton.Enable = 'on';
+            app.WarningsLabel.Visible = 'off';
+        else
+            app.StartCalibrationButton.Enable = 'on';
+        end
+    else
+        app.StartCalibrationButton.Enable = 'on';
+    end
+end
+

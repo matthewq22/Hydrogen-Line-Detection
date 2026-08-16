@@ -1,4 +1,4 @@
-function sdrCon = config(app)
+function sdrConnected = config(app)
     app.centreFreq = app.CentreFrequencySlider.Value * 10^6;
     app.fftSize = str2double(app.FFTSizeDropDown.Value);
     app.window = hann(app.fftSize);
@@ -6,10 +6,10 @@ function sdrCon = config(app)
     app.freq = (app.centreFreq + rawFreqs) / 1e6; % MHz
     app.plotLine = min(app.freq) < app.targetFreq && max(app.freq) > app.targetFreq;
     
-    sdrCon = false;
+    sdrConnected = false;
     app.sdr = comm.SDRRTLReceiver(CenterFrequency=app.centreFreq, SampleRate=app.sampleRate, OutputDataType='double', SamplesPerFrame=app.fftSize);
     if app.sdr.info.RadioName ~= "Cannot find radio"
-        sdrCon = true;
+        sdrConnected = true;
     else
         rtlNotConnected(app);
     end
