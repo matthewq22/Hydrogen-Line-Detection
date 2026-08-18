@@ -1,6 +1,11 @@
 function scanningLoop(app)
     % To be run when entering scanning mode
-    numSamples = int32(app.ScanLengthSlider.Value);
+    time = app.ScalLengthSlider.Value;
+    
+    frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
+    
+    numSamples = int32(time / frameLength);
+    
     app.lastSamples = zeros(app.fftSize, numSamples);
 
     count = 0;
@@ -24,8 +29,8 @@ function scanningLoop(app)
         % Average last n number of samples
         toplot = mean(app.lastSamples, 2);
 
-        plot(app.UIAxes, app.freq, toplot);
-        drawnow limitrate; 
+        plotting(app, toplot);
+        
         if app.closeReq
             onClose(app);
             break

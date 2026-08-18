@@ -14,8 +14,9 @@ function accumulationLoop(app)
                 newData = dataAnalysis(app, doCheck);
                 data = data + newData;
                 count = count + 1;
-                plot(app.UIAxes, app.freq, data / count);
-                drawnow limitrate;
+                toplot = data / count;
+                
+                plotting(app, toplot);
 
                 if app.closeReq
                     onClose(app);
