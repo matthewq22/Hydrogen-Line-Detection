@@ -1,6 +1,6 @@
 function scanningLoop(app)
     % To be run when entering scanning mode
-    time = app.ScalLengthSlider.Value;
+    time = app.ScanLengthSlider.Value;
     
     frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
     
@@ -8,7 +8,8 @@ function scanningLoop(app)
     
     app.lastSamples = zeros(app.fftSize, numSamples);
 
-    count = 0;
+    count = 0.;
+    numNonZeroFrames = 0.; % Number of non zeros frames in the array
 
     % Loop to run while in the scanning phase
     while app.isScanning
@@ -26,10 +27,15 @@ function scanningLoop(app)
         app.lastSamples(:, 1:end - 1) = app.lastSamples(:, 2:end);
         app.lastSamples(:, end) = newData;
 
+        count = count + 1;
+        numNonZeroFrames = numNonZeroFrames + 1;
+
         % Average last n number of samples
-        toplot = mean(app.lastSamples, 2);
+        toplot = sum(app.lastSamples, 2) / double(min(numNonZeroFrames, numSamples));
 
         plotting(app, toplot);
+
+        
         
         if app.closeReq
             onClose(app);

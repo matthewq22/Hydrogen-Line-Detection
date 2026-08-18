@@ -2,13 +2,14 @@ function success = baseCal(app, time)
     % Function to find the average background vector
 
     frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
-    numFrames = time / frameLength;
+    numFrames = int32(time / frameLength);
     
     vector = zeros(app.fftSize, 1);
     win = hann(app.fftSize);
 
     success = true;
     
+    tic;
     for i=1:numFrames
         if mod(i, 50) == 0
             % Check if the RTL-SDR is still connected
@@ -25,5 +26,9 @@ function success = baseCal(app, time)
         vector = vector + mag;
     end
     
-    app.avgBg = fftshift(vector / numFrames);
+    app.avgBg = fftshift(vector / double(numFrames));
+
+    time = toc;
+
+    fprintf("Calibration time: %f\nSample Rate: %f\nSamples Per Frame: %f\nFrame Length: %f\nnumFrames: %f\n", time, app.sdr.SampleRate, app.sdr.SamplesPerFrame,frameLength, numFrames);
 end
