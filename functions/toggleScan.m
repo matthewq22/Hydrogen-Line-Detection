@@ -12,6 +12,6 @@ function toggleScan(app)
         app.isScanning = true;
         app.ScanButton.BackgroundColor = 'red';
         app.ScanButton.Text = 'Stop';
-        scanningLoopOpt(app);
+        scanningLoop(app);
     end      
 end
