@@ -19,9 +19,6 @@ function calibrate(app)
     ready = config(app);
 
     if ready
-        app.WarningsLabel.FontColor = 'black';
-        app.WarningsLabel.Text = "Calibrating";
-        app.WarningsLabel.Visible = 'on';
         integrationTime = app.CalibrationtimeEditField.Value;
         drawnow;
 
@@ -39,7 +36,6 @@ function calibrate(app)
             app.ScanButton.Enable = 'on';
             app.AccumulateButton.Enable = 'on';
             app.StartCalibrationButton.Enable = 'on';
-            app.WarningsLabel.Visible = 'off';
         else
             app.StartCalibrationButton.Enable = 'on';
         end

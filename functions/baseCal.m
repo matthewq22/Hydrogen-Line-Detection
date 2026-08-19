@@ -8,6 +8,12 @@ function success = baseCal(app, time)
     win = hann(app.fftSize);
 
     success = true;
+
+    % Create a progress bar
+
+    bar = uiprogressdlg(app.UIFigure, 'Title', 'Calibrating', ...
+                     'Message', 'Collecting background noise', ...
+                     'Cancelable', 'off');
     
     tic;
     try
@@ -16,6 +22,9 @@ function success = baseCal(app, time)
             mag = abs(fft(data .* win)).^2;
             
             vector = vector + mag;
+            if mod(i, 100) == 0
+                bar.Value = double(i) / double(numFrames);
+            end
         end
         
         app.avgBg = fftshift(vector / double(numFrames));
@@ -24,7 +33,13 @@ function success = baseCal(app, time)
     
         fprintf("Calibration time: %f\nSample Rate: %f\nSamples Per Frame: %f\nFrame Length: %f\nnumFrames: %f\n", time, app.sdr.SampleRate, app.sdr.SamplesPerFrame,frameLength, numFrames);
     catch ME
+        fprintf('Calibration failed due to hardware disconnect: %s\n', ME.message);
         rtlNotConnected(app);
         success = false;
+    end
+
+    % Remove progress bar
+    if isvalid(bar)
+        delete(bar);
     end
 end
