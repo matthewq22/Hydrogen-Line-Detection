@@ -15,10 +15,13 @@ function accumulationLoop(app)
     end
     hold(app.UIAxes, 'off');
 
+    elapsedTime = tic;
+
     while app.isAccumulating
         % Check if the RTL-SDR is still connected, every few cycles
-        if mod(count, 100) == 0
+        if toc(elapsedTime) >= 0.1
             doCheck = true;
+            elapsedTime = tic;
         else
             doCheck = false;
         end

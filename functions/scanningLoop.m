@@ -27,11 +27,13 @@ function scanningLoop(app)
     end
     hold(app.UIAxes, 'off');
 
+    elapsedTime = tic;
+
     % Loop to run while in the scanning phase
     while app.isScanning
-        if mod(count, 100) == 0
-            % Check RTL-SDR is still running
+        if toc(elapsedTime) >= 0.1
             doCheck = true;
+            elapsedTime = tic;
         else
             doCheck = false;
         end
