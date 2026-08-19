@@ -8,12 +8,12 @@ function success = baseCal(app, time)
     win = hann(app.fftSize);
 
     success = true;
+    
+    drawnow;
 
-    % Create a progress bar
-
-    bar = uiprogressdlg(app.UIFigure, 'Title', 'Calibrating', ...
-                     'Message', 'Collecting background noise', ...
-                     'Cancelable', 'off');
+    bar = uiprogressdlg(app.UIFigure, Title='Calibrating',...
+        Message='Measuring background noise',...
+        Cancelable='off');
     
     tic;
     try
@@ -22,7 +22,7 @@ function success = baseCal(app, time)
             mag = abs(fft(data .* win)).^2;
             
             vector = vector + mag;
-            if mod(i, 100) == 0
+            if mod(i,100) == 0
                 bar.Value = double(i) / double(numFrames);
             end
         end
@@ -37,9 +37,8 @@ function success = baseCal(app, time)
         rtlNotConnected(app);
         success = false;
     end
-
-    % Remove progress bar
+    
     if isvalid(bar)
-        delete(bar);
+        delete(bar)
     end
 end
