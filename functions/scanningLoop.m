@@ -29,7 +29,7 @@ function scanningLoop(app)
 
     % Loop to run while in the scanning phase
     while app.isScanning
-        if mod(count, 200) == 0
+        if mod(count, 100) == 0
             % Check RTL-SDR is still running
             doCheck = true;
         else

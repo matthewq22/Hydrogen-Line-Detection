@@ -17,7 +17,7 @@ function accumulationLoop(app)
 
     while app.isAccumulating
         % Check if the RTL-SDR is still connected, every few cycles
-        if mod(count, 200) == 0
+        if mod(count, 100) == 0
             doCheck = true;
         else
             doCheck = false;

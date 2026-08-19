@@ -3,9 +3,9 @@ function calibrate(app)
     app.ScanButton.Enable = 'off';
     app.AccumulateButton.Enable = 'off';
     app.StartCalibrationButton.Enable = 'off';
-    drawnow;
-
+    app.WarningsLabel.Visible = 'off';
     cla(app.UIAxes);
+    drawnow;
 
     % Stop all processes
     if app.isScanning
