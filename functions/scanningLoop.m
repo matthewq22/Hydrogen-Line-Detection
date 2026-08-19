@@ -11,6 +11,8 @@ function scanningLoop(app)
     count = 0.;
     numNonZeroFrames = 0.; % Number of non zeros frames in the array
 
+
+
     % Loop to run while in the scanning phase
     while app.isScanning
         if mod(count, 200) == 0

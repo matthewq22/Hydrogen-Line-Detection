@@ -1,11 +1,13 @@
-function plotting(app, toPlot)
+function plotting(app, toPlot, data, hydrogenLine)
      if app.applySmoothing
          toPlot = sgolayfilt(toPlot, app.smoothingOrder, app.smoothingFrame);
      end
-     plot(app.UIAxes, app.freq, toPlot)
-
+     data.YData = toPlot;
      if app.plotLine
-        xline(app.UIAxes, app.targetFreq, Color='r', LineWidth=1.5);
+         hydrogenLine.Visible = 'on';
+     else
+         hydrogenLine.Visible = 'off';
      end
+
      drawnow limitrate
 end
