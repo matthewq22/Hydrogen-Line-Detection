@@ -1,7 +1,7 @@
 function corrected = dataAnalysis(app, doCheck)
     failure = false;
 
-    if doCheck
+    if doCheck && ~app.bypassHardwareCheck
         info = sdrinfo(app.sdr.RadioAddress);
         if isempty(info)
             rtlNotConnected(app);
@@ -13,7 +13,7 @@ function corrected = dataAnalysis(app, doCheck)
             app.AccumulateButton.Enable = 'off';
         end
     end
-    if ~ failure
+    if ~failure
         data = app.sdr();
         y = abs(fft(data .* app.window)).^2;
         y = fftshift(y);
