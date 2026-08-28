@@ -1,17 +1,16 @@
 function accumulationLoop(app)
     % To be run when in accumulation phase
     app.StartCalibrationButton.Enable = 'off';
-    data = zeros(app.fftSize, 1);
     count = 0;
 
     % Create plots
-    hLine = plot(app.UIAxes, app.freq, zeros(app.fftSize, 1));
+    toPlot = plot(app.UIAxes, app.freq, zeros(app.fftSize, 1));
     hold(app.UIAxes, 'on');
-    hTargetLine = xline(app.UIAxes, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
+    targetLine = xline(app.UIAxes, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
     if app.plotLine
-        hTargetLine.Visible = 'on';
+        targetLine.Visible = 'on';
     else
-        hTargetLine.Visible = 'off';
+        targetLine.Visible = 'off';
     end
     hold(app.UIAxes, 'off');
 
@@ -27,11 +26,11 @@ function accumulationLoop(app)
         end
         % Add new data to existing vector
         newData = dataAnalysis(app, doCheck);
-        data = data + newData;
+        app.accumData = app.accumData + newData;
         count = count + 1;
-        toplot = data / count;
+        toplot = app.accumData / count;
         
-        plotting(app, toplot, hLine, hTargetLine);
+        plotting(app, toplot, toPlot, targetLine);
 
     end
     if isvalid(app)

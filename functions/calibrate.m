@@ -3,6 +3,7 @@ function calibrate(app)
     app.ScanButton.Enable = 'off';
     app.AccumulateButton.Enable = 'off';
     app.StartCalibrationButton.Enable = 'off';
+    app.ResetButton.Enable = 'off';
     cla(app.UIAxes);
     drawnow;
 
@@ -35,6 +36,7 @@ function calibrate(app)
             app.ScanButton.Enable = 'on';
             app.AccumulateButton.Enable = 'on';
             app.StartCalibrationButton.Enable = 'on';
+            app.ResetButton.Enable = 'on';
         else
             app.StartCalibrationButton.Enable = 'on';
         end

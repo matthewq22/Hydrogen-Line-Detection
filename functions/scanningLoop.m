@@ -14,6 +14,7 @@ function scanningLoop(app)
     numNonZeroFrames = 0.; % Number of non zeros frames in the array
 
     app.StartCalibrationButton.Enable = 'off';
+    app.ResetButton.Enable = 'off';
 
     % Initialise plots
 
@@ -61,5 +62,6 @@ function scanningLoop(app)
     end
     if isvalid(app)
         app.StartCalibrationButton.Enable = 'on';
+        app.ResetButton.Enable = 'on';
     end
 end

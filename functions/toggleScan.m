@@ -1,5 +1,5 @@
 function toggleScan(app)
-    % Switch betweeing scanning and not
+    % Switch between scanning and not
     if app.isAccumulating
         toggleAccumulate(app);
     end

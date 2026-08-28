@@ -5,6 +5,7 @@ function sdrConnected = config(app)
     app.window = hann(app.fftSize);
     rawFreqs = ((-app.fftSize/2 : app.fftSize/2 - 1) * (app.sampleRate / app.fftSize)); 
     app.freq = (app.centreFreq + rawFreqs) / 1e6; % MHz
+    app.accumData = zeros(app.fftSize, 1);
     app.plotLine = min(app.freq) < app.targetFreq && max(app.freq) > app.targetFreq;
     
     sdrConnected = false;

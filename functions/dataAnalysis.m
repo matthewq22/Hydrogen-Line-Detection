@@ -19,6 +19,5 @@ function corrected = dataAnalysis(app, doCheck)
         y = fftshift(y);
     
         corrected = y ./ app.avgBg;
-    end
-    
+    end   
 end
