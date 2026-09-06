@@ -1,40 +1,33 @@
 function accumulationLoop(app)
-    % To be run when in accumulation phase
+    % Disable calibration button during the active phase
     app.StartCalibrationButton.Enable = 'off';
     count = 0;
 
     % Create plots
-    toPlot = plot(app.UIAxes, app.freq, zeros(app.fftSize, 1));
-    hold(app.UIAxes, 'on');
-    targetLine = xline(app.UIAxes, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
-    if app.plotLine
-        targetLine.Visible = 'on';
-    else
-        targetLine.Visible = 'off';
-    end
-    hold(app.UIAxes, 'off');
-
+    [lineHandle, targetLine, ax1, ax2] = createPlots(app);
+    
     elapsedTime = tic;
 
     while app.isAccumulating
-        % Check if the RTL-SDR is still connected, every few cycles
+        % Check if the RTL-SDR is still connected every 100ms
         if toc(elapsedTime) >= 0.1
             doCheck = true;
             elapsedTime = tic;
         else
             doCheck = false;
         end
+        
         % Add new data to existing vector
         newData = dataAnalysis(app, doCheck);
         app.accumData = app.accumData + newData;
         count = count + 1;
-        toplot = app.accumData / count;
+        toPlot = app.accumData / count;
         
-        plotting(app, toplot, toPlot, targetLine);
-
+        plotting(app, toPlot, lineHandle, targetLine, ax1, ax2);
     end
+    
     if isvalid(app)
-        % Allow calibration only once everything is stopped
+        % Re-enable calibration
         app.StartCalibrationButton.Enable = 'on';
     end
 end

@@ -16,17 +16,8 @@ function scanningLoop(app)
     app.StartCalibrationButton.Enable = 'off';
     app.ResetButton.Enable = 'off';
 
-    % Initialise plots
-
-    hLine = plot(app.UIAxes, app.freq, zeros(app.fftSize, 1));
-    hold(app.UIAxes, 'on');
-    hTargetLine = xline(app.UIAxes, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
-    if app.plotLine
-        hTargetLine.Visible = 'on';
-    else
-        hTargetLine.Visible = 'off';
-    end
-    hold(app.UIAxes, 'off');
+    % Create plots
+    [lineHandle, targetLine, ax1, ax2] = createPlots(app);
 
     elapsedTime = tic;
 
@@ -54,10 +45,10 @@ function scanningLoop(app)
         end
          
         % Average last n number of samples
-        %toplot = runningSum / double(min(numNonZeroFrames, numSamples));
-        toplot = runningSum / double(numSamples);
+        %toPlot = runningSum / double(min(numNonZeroFrames, numSamples));
+        toPlot = runningSum / double(numSamples);
 
-        plotting(app, toplot, hLine, hTargetLine);
+        plotting(app, toPlot, lineHandle, targetLine, ax1, ax2);
 
     end
     if isvalid(app)
