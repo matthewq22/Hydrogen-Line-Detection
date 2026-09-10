@@ -1,6 +1,8 @@
 function success = baseCal(app, time)
     % Function to find the average background vector
 
+    fprintf("Calibrating...\n")
+
     frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
     numFrames = int32(time / frameLength);
     
@@ -14,7 +16,10 @@ function success = baseCal(app, time)
     bar = uiprogressdlg(app.UIFigure, Title='Calibrating',...
         Message='Measuring background noise',...
         Cancelable='off');
-    
+
+    fprintf("Progress bar created\n");
+
+
     tic;
     try
         for i=1:numFrames

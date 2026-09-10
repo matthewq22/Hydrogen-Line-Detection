@@ -3,6 +3,7 @@ function rtlNotConnected(app)
     app.WarningsLabel.Text = 'CONNECT RTL-SDR';
     app.WarningsLabel.FontColor = 'red';
     app.WarningsLabel.Visible = 'on';
+    app.StartCalibrationButton.Enable = 'on';
 
     % Stop all processes
     if app.isAccumulating

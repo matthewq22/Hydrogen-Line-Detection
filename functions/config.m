@@ -10,11 +10,34 @@ function sdrConnected = config(app)
 
     fprintf("Min freq: %f\nMax freq: %f\n", min(app.freq), max(app.freq));
     
-    sdrConnected = false;
-    app.sdr = comm.SDRRTLReceiver(CenterFrequency=app.centreFreq, SampleRate=app.sampleRate, OutputDataType='double', SamplesPerFrame=app.fftSize);
-    if app.sdr.info.RadioName ~= "Cannot find radio"
+    % 1. Cleanly clear out any existing stale device locks before re-testing
+    if ~isempty(app.sdr) && isvalid(app.sdr)
+        release(app.sdr); 
+        clear app.sdr;
+    end
+
+    try
+        % 2. Attempt to create the object 
+        app.sdr = comm.SDRRTLReceiver(...
+            'CenterFrequency', app.centreFreq, ...
+            'SampleRate', app.sampleRate, ...
+            'OutputDataType', 'double', ...
+            'SamplesPerFrame', app.fftSize);
+        
+        % 3. Extract the info struct. 
+        % (If no hardware is plugged in, this line will immediately trigger an error)
+        radioDetails = info(app.sdr); 
+        fprintf("Finished searching\n");
+        disp(radioDetails);
+        
+        % 4. If we made it here without an error, the hardware is alive!
         sdrConnected = true;
-    else
+    
+    catch ME
+        % 5. This handles an unplugged radio or a port conflict error seamlessly
+        fprintf("SDR Connection Failed: %s\n", ME.message);
+        sdrConnected = false;
         rtlNotConnected(app);
     end
+
 end
