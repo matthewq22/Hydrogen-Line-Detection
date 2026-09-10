@@ -27,12 +27,8 @@ function calibrate(app)
 
         if success
             % Plotting
-            plot(app.UIAxes, app.freq, 10*log10(app.avgBg));
-            if app.plotLine
-                xline(app.UIAxes, app.targetFreq, Color='r', LineWidth=1.5);
-            end
-            xlim(app.UIAxes, [min(app.freq) max(app.freq)]);
-            
+            [targetLine, ax1, ax2] = createPlots(app);
+            plotting(app, app.avgBg, targetLine, ax1, ax2);
             app.ScanButton.Enable = 'on';
             app.AccumulateButton.Enable = 'on';
             app.StartCalibrationButton.Enable = 'on';

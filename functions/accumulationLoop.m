@@ -4,7 +4,7 @@ function accumulationLoop(app)
     count = 0;
 
     % Create plots
-    [lineHandle, targetLine, ax1, ax2] = createPlots(app);
+    [targetLine, ax1, ax2] = createPlots(app);
     
     elapsedTime = tic;
 
@@ -23,7 +23,7 @@ function accumulationLoop(app)
         count = count + 1;
         toPlot = app.accumData / count;
         
-        plotting(app, toPlot, lineHandle, targetLine, ax1, ax2);
+        plotting(app, toPlot, targetLine, ax1, ax2);
     end
     
     if isvalid(app)

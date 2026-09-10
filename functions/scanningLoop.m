@@ -17,7 +17,7 @@ function scanningLoop(app)
     app.ResetButton.Enable = 'off';
 
     % Create plots
-    [lineHandle, targetLine, ax1, ax2] = createPlots(app);
+    [targetLine, ax1, ax2] = createPlots(app);
 
     elapsedTime = tic;
 
@@ -48,7 +48,7 @@ function scanningLoop(app)
         %toPlot = runningSum / double(min(numNonZeroFrames, numSamples));
         toPlot = runningSum / double(numSamples);
 
-        plotting(app, toPlot, lineHandle, targetLine, ax1, ax2);
+        plotting(app, toPlot, targetLine, ax1, ax2);
 
     end
     if isvalid(app)

@@ -1,11 +1,13 @@
-function [p, targetLine, ax1, ax2] = createPlots(app)
+function [targetLine, ax1, ax2] = createPlots(app)
+    
     ax1 = app.UIAxes;
     
     % Clear any pre-existing plots
     delete(findobj(ax1, 'Type', 'line'));
     delete(findobj(ax1, 'Type', 'constantline'));
 
-    p = plot(ax1, app.freq, zeros(app.fftSize, 1));
+    app.PlotLineHandle = plot(ax1, app.freq, zeros(app.fftSize, 1));
+    ax1.XLim = [min(app.freq), max(app.freq)];
     
     % Show hydrogen line
     targetLine = xline(ax1, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
@@ -16,15 +18,10 @@ function [p, targetLine, ax1, ax2] = createPlots(app)
     end
 
     % Configure primary axes (Frequency - Bottom)
-    ax1 = app.UIAxes;
     ax1.Box = 'off'; 
-    
-    % --- CRITICAL FIX FOR APP DESIGNER SYNCHRONIZATION ---
-    % Force the primary App Designer axes to use the strict position metric
-    ax1.ActivePositionProperty = 'position';
-
+  
     % Create the secondary axis anchored inside the exact same UI container
-   ax2 = axes(ax1.Parent, ...
+    ax2 = axes(ax1.Parent, ...
         'Units', ax1.Units, ...
         'Position', ax1.Position, ...
         'Color', 'none', ...
@@ -32,10 +29,13 @@ function [p, targetLine, ax1, ax2] = createPlots(app)
         'YAxisLocation', 'right', ...
         'YTick', [], ...
         'YTickLabel', [], ...
-        'Box', 'off', ...                     % CRITICAL: Wipes out the layout bounding box
-        'YColor', 'none', ...                 % CRITICAL: Completely hides the invisible right line
-        'ActivePositionProperty', 'position'); % Enforce identical positioning engine
-    
+        'Box', 'off', ...                     
+        'YColor', 'none');
+   
+    ax1.ActivePositionProperty = 'position';
+    ax2.ActivePositionProperty = 'position';
+    ax2.InnerPosition = ax1.InnerPosition;
+
     xlabel(ax2, 'Velocity (km/s)');
     
     % Strip interactions from the top layer completely
@@ -55,10 +55,7 @@ function [p, targetLine, ax1, ax2] = createPlots(app)
 
     % Add listeners to keep them perfectly synced geometrically and scale-wise
     addlistener(ax1, 'XLim', 'PostSet', updateTopXLim);
-    
-    % --- PERFECT PIXEL ALIGNMENT ---
-    % Because ActivePositionProperty is set to 'position', syncing the 'Position'
-    % vector forces the drawable bounding boxes to lock matching pixel-for-pixel.
+   
     addlistener(ax1, 'Position', 'PostSet', @(src, evnt) set(ax2, 'Position', ax1.Position));
     
     % Ensure secondary axis text layers stay on top

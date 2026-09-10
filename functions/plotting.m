@@ -1,10 +1,10 @@
-function plotting(app, toPlot, lineHandle, hydrogenLine, ax1, ax2)
+function plotting(app, toPlot, hydrogenLine, ax1, ax2)
      % 1. Apply Savitzky-Golay filtering if enabled
      if app.applySmoothing
          toPlot = sgolayfilt(toPlot, app.smoothingOrder, app.smoothingFrame);
      end
      
-     lineHandle.YData = toPlot;
+     app.PlotLineHandle.YData = toPlot;
      
      % Show hydrogen line
      if app.plotLine
@@ -17,7 +17,6 @@ function plotting(app, toPlot, lineHandle, hydrogenLine, ax1, ax2)
      % Scale axes
      if isvalid(ax2)
          ax2.YLim = ax1.YLim;
-         uistack(ax2, 'top');
      end
 
      drawnow limitrate

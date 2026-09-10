@@ -7,6 +7,8 @@ function sdrConnected = config(app)
     app.freq = (app.centreFreq + rawFreqs) / 1e6; % MHz
     app.accumData = zeros(app.fftSize, 1);
     app.plotLine = min(app.freq) < app.targetFreq && max(app.freq) > app.targetFreq;
+
+    fprintf("Min freq: %f\nMax freq: %f\n", min(app.freq), max(app.freq));
     
     sdrConnected = false;
     app.sdr = comm.SDRRTLReceiver(CenterFrequency=app.centreFreq, SampleRate=app.sampleRate, OutputDataType='double', SamplesPerFrame=app.fftSize);
