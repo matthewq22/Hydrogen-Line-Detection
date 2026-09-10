@@ -5,7 +5,8 @@ function createPlots(app)
     % Clear any pre-existing plots
     delete(findobj(ax1, 'Type', 'line'));
     delete(findobj(ax1, 'Type', 'constantline'));
-
+    
+    % Create the data handle
     app.PlotLineHandle = plot(ax1, app.freq, zeros(app.fftSize, 1));
     ax1.XLim = [min(app.freq), max(app.freq)];
     
@@ -17,10 +18,9 @@ function createPlots(app)
         app.HydrogenLineHandle.Visible = 'off';
     end
 
-    % Configure primary axes (Frequency - Bottom)
     ax1.Box = 'off'; 
   
-    % Create the secondary axis anchored inside the exact same UI container
+    % Create velocity axes
     app.VelocityAxes = axes(ax1.Parent, ...
         'Units', ax1.Units, ...
         'Position', ax1.Position, ...
@@ -34,6 +34,7 @@ function createPlots(app)
 
     ax2 = app.VelocityAxes;
    
+    % Ensure positions overlap 
     ax1.ActivePositionProperty = 'position';
     ax2.ActivePositionProperty = 'position';
     ax2.InnerPosition = ax1.InnerPosition;
@@ -48,16 +49,14 @@ function createPlots(app)
         ax2.Interactions = [];
     end
 
-
     % Define the callback function for dynamic scaling
-    updateTopXLim = @(src, evnt) updateVelocityScale(app, ax1, ax2);
+    updateTopXLim = @(src, evnt) updateVelocityScale(app);
 
     % Run it once immediately to initialize the starting view limits
     updateTopXLim();
 
-    % Add listeners to keep them perfectly synced geometrically and scale-wise
+    % Listeners to ensure positions stay synced
     addlistener(ax1, 'XLim', 'PostSet', updateTopXLim);
-   
     addlistener(ax1, 'Position', 'PostSet', @(src, evnt) set(ax2, 'Position', ax1.Position));
     
     % Ensure secondary axis text layers stay on top

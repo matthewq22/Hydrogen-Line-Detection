@@ -1,30 +1,31 @@
-function updateVelocityScale(app, ax1, ax2)
-    % Ensure both axes are valid before performing updates
+function updateVelocityScale(app)
+    
+    ax1 = app.UIAxes;
+    ax2 = app.VelocityAxes;
+    
+    % Ensure both axes are valid
     if ~isvalid(ax1) || ~isvalid(ax2)
         return;
     end
 
     c = 299792.458; % Speed of light in km/s
-    f0 = app.targetFreq; % Your hydrogen rest frequency
+    f0 = app.targetFreq; % Emission of neutral hydrogen
 
-    % 1. Calculate raw velocity transformations at the current XLim boundaries
-    % (Using the Radio Convention: divided by static f0)
+    % Calculate velocity from frequencies
     v_start = c * ((f0 - ax1.XLim(1)) / f0);
     v_end   = c * ((f0 - ax1.XLim(2)) / f0);
 
-    % 2. Store the raw vector to determine direction
+    % Set limits
     rawVelLimits = [v_start, v_end];
     sortedLimits = sort(rawVelLimits);
-
-    % 3. Set the limits sorted 
     ax2.XLim = sortedLimits;
 
-    % 4. CRITICAL FIX: Force ticks at exactly every 50 km/s step
+    % Custom tick markings
     tickStart = ceil(sortedLimits(1) / 50) * 50;  % Find next highest multiple of 50
     tickEnd   = floor(sortedLimits(2) / 50) * 50; % Find next lowest multiple of 50
-    ax2.XTick = tickStart:50:tickEnd;             % Generate the 50 km/s grid array
+    ax2.XTick = tickStart:50:tickEnd;             
 
-    % 5. Invert the top axis visually so higher frequencies align with lower velocities
+    % Ensure correct direction
     if rawVelLimits(1) > rawVelLimits(2)
         ax2.XDir = 'reverse';
     else
