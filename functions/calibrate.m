@@ -27,8 +27,8 @@ function calibrate(app)
 
         if success
             % Plotting
-            [targetLine, ax1, ax2] = createPlots(app);
-            plotting(app, app.avgBg, targetLine, ax1, ax2);
+            createPlots(app);
+            plotting(app, app.avgBg);
             app.ScanButton.Enable = 'on';
             app.AccumulateButton.Enable = 'on';
             app.StartCalibrationButton.Enable = 'on';

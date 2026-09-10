@@ -1,6 +1,8 @@
 function scanningLoop(app)
     % To be run when entering scanning mode
     time = app.ScanLengthSlider.Value;
+
+    resetplotview(app.UIAxes);
     
     frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
     
@@ -15,9 +17,6 @@ function scanningLoop(app)
 
     app.StartCalibrationButton.Enable = 'off';
     app.ResetButton.Enable = 'off';
-
-    % Create plots
-    [targetLine, ax1, ax2] = createPlots(app);
 
     elapsedTime = tic;
 
@@ -48,7 +47,7 @@ function scanningLoop(app)
         %toPlot = runningSum / double(min(numNonZeroFrames, numSamples));
         toPlot = runningSum / double(numSamples);
 
-        plotting(app, toPlot, targetLine, ax1, ax2);
+        plotting(app, toPlot);
 
     end
     if isvalid(app)

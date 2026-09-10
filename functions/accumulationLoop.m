@@ -1,10 +1,8 @@
 function accumulationLoop(app)
     % Disable calibration button during the active phase
     app.StartCalibrationButton.Enable = 'off';
-    count = 0;
 
-    % Create plots
-    [targetLine, ax1, ax2] = createPlots(app);
+    resetplotview(app.UIAxes);
     
     elapsedTime = tic;
 
@@ -20,10 +18,10 @@ function accumulationLoop(app)
         % Add new data to existing vector
         newData = dataAnalysis(app, doCheck);
         app.accumData = app.accumData + newData;
-        count = count + 1;
-        toPlot = app.accumData / count;
+        app.accumCount = app.accumCount + 1;
+        toPlot = app.accumData / app.accumCount;
         
-        plotting(app, toPlot, targetLine, ax1, ax2);
+        plotting(app, toPlot);
     end
     
     if isvalid(app)

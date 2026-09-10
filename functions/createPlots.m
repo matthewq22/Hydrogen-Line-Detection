@@ -1,4 +1,4 @@
-function [targetLine, ax1, ax2] = createPlots(app)
+function createPlots(app)
     
     ax1 = app.UIAxes;
     
@@ -10,18 +10,18 @@ function [targetLine, ax1, ax2] = createPlots(app)
     ax1.XLim = [min(app.freq), max(app.freq)];
     
     % Show hydrogen line
-    targetLine = xline(ax1, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
+    app.HydrogenLineHandle = xline(ax1, app.targetFreq, 'Color', 'r', 'LineWidth', 1.5);
     if app.plotLine
-        targetLine.Visible = 'on';
+        app.HydrogenLineHandle.Visible = 'on';
     else
-        targetLine.Visible = 'off';
+        app.HydrogenLineHandle.Visible = 'off';
     end
 
     % Configure primary axes (Frequency - Bottom)
     ax1.Box = 'off'; 
   
     % Create the secondary axis anchored inside the exact same UI container
-    ax2 = axes(ax1.Parent, ...
+    app.VelocityAxes = axes(ax1.Parent, ...
         'Units', ax1.Units, ...
         'Position', ax1.Position, ...
         'Color', 'none', ...
@@ -31,6 +31,8 @@ function [targetLine, ax1, ax2] = createPlots(app)
         'YTickLabel', [], ...
         'Box', 'off', ...                     
         'YColor', 'none');
+
+    ax2 = app.VelocityAxes;
    
     ax1.ActivePositionProperty = 'position';
     ax2.ActivePositionProperty = 'position';
