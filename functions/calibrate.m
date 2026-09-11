@@ -15,17 +15,16 @@ function calibrate(app)
         toggleAccumulate(app);
     end
     
-    ready = config(app);
+    [ready, sdr] = config(app);
  
     if ready
         integrationTime = app.CalibrationtimeEditField.Value;
         drawnow;
 
         % Get the baseline vector
-        success = baseCal(app, integrationTime);
+        success = baseCal(app, integrationTime, sdr);
 
-        release(app.sdr);
-        app.sdr = [];
+        release(sdr);
 
         if success
             % Plotting

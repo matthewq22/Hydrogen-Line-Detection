@@ -1,4 +1,4 @@
-function sdrConnected = config(app)
+function [sdrConnected, sdr] = config(app)
     % Configure the RTL-SDR
     app.centreFreq = app.CentreFrequencySlider.Value * 10^6;
     app.fftSize = str2double(app.FFTSizeDropDown.Value);
@@ -15,16 +15,17 @@ function sdrConnected = config(app)
     fprintf("Min freq: %f\nMax freq: %f\n", min(app.freq), max(app.freq));
 
     try
-        app.sdr = comm.SDRRTLReceiver(...
+        sdr = comm.SDRRTLReceiver(...
             'CenterFrequency', app.centreFreq, ...
             'SampleRate', app.sampleRate, ...
             'OutputDataType', 'double', ...
             'SamplesPerFrame', app.fftSize);
         
-        radioDetails = info(app.sdr); 
-        fprintf("Finished searching\n");
-        disp(radioDetails);
-        
+        info = sdrinfo(sdr.RadioAddress);
+        disp(info);
+        if isempty(info)
+            error("No radio connected")
+        end
         sdrConnected = true;
     
     catch ME

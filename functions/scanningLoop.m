@@ -1,14 +1,14 @@
 function scanningLoop(app)
     % To be run when entering scanning mode
     
-    ready = config(app);
+    [ready, sdr] = config(app);
 
     time = app.ScanLengthSlider.Value;
 
     resetplotview(app.UIAxes);
     updateVelocityScale(app);
     
-    frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
+    frameLength = sdr.SamplesPerFrame / sdr.SampleRate;
     
     numSamples = int32(time / frameLength);
     
@@ -19,10 +19,7 @@ function scanningLoop(app)
     count = 0.;
     numNonZeroFrames = 0.; % Number of non zeros frames in the array
 
-
     elapsedTime = tic;
-
-    
 
     if ready
 
@@ -35,7 +32,7 @@ function scanningLoop(app)
                 doCheck = false;
             end
             % Get latest fft vector
-            newData = dataAnalysis(app, doCheck);
+            newData = dataAnalysis(app, sdr, doCheck);
             oldData = app.lastSamples(:, bufferInd);
     
             runningSum = runningSum + newData - oldData;
@@ -55,8 +52,7 @@ function scanningLoop(app)
     
             plotting(app, toPlot);
         end
-        release(app.sdr);
-        app.sdr = [];
+        release(sdr);
     else
         rtlNotConnected(app);
     end

@@ -1,8 +1,8 @@
-function corrected = dataAnalysis(app, doCheck)
+function corrected = dataAnalysis(app, sdr, doCheck)
     failure = false;
 
     if doCheck && ~app.bypassHardwareCheck
-        info = sdrinfo(app.sdr.RadioAddress);
+        info = sdrinfo(sdr.RadioAddress);
         if isempty(info)
             rtlNotConnected(app);
             corrected = zeros(app.fftSize, 1);
@@ -14,7 +14,7 @@ function corrected = dataAnalysis(app, doCheck)
         end
     end
     if ~failure
-        data = app.sdr();
+        data = sdr();
         y = abs(fft(data .* app.window)).^2;
         y = fftshift(y);
     

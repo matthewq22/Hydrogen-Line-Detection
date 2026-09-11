@@ -4,7 +4,7 @@ function accumulationLoop(app)
     
     elapsedTime = tic;
 
-    ready = config(app);
+    [ready, sdr] = config(app);
 
     if ready
         while app.isAccumulating
@@ -17,15 +17,14 @@ function accumulationLoop(app)
             end
             
             % Add new data to existing vector
-            newData = dataAnalysis(app, doCheck);
+            newData = dataAnalysis(app, sdr, doCheck);
             app.accumData = app.accumData + newData;
             app.accumCount = app.accumCount + 1;
             toPlot = app.accumData / app.accumCount;
             
             plotting(app, toPlot);
         end
-        release(app.sdr);
-        app.sdr = [];
+        release(sdr);
     else
         rtlNotConnected(app);
     end
