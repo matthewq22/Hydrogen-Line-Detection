@@ -24,6 +24,9 @@ function calibrate(app)
         % Get the baseline vector
         success = baseCal(app, integrationTime);
 
+        release(app.sdr);
+        app.sdr = [];
+
         if success
             % Plotting
             createPlots(app);

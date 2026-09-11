@@ -14,11 +14,6 @@ function sdrConnected = config(app)
 
     fprintf("Min freq: %f\nMax freq: %f\n", min(app.freq), max(app.freq));
 
-    if ~isempty(app.sdr) && isvalid(app.sdr)
-        release(app.sdr); 
-        clear app.sdr;
-    end
-
     try
         app.sdr = comm.SDRRTLReceiver(...
             'CenterFrequency', app.centreFreq, ...

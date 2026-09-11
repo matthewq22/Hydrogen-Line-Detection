@@ -1,5 +1,8 @@
 function scanningLoop(app)
     % To be run when entering scanning mode
+    
+    ready = config(app);
+
     time = app.ScanLengthSlider.Value;
 
     resetplotview(app.UIAxes);
@@ -16,43 +19,45 @@ function scanningLoop(app)
     count = 0.;
     numNonZeroFrames = 0.; % Number of non zeros frames in the array
 
-    app.StartCalibrationButton.Enable = 'off';
-    app.ResetButton.Enable = 'off';
 
     elapsedTime = tic;
 
-    % Loop to run while in the scanning phase
-    while app.isScanning
-        if toc(elapsedTime) >= 0.1
-            doCheck = true;
-            elapsedTime = tic;
-        else
-            doCheck = false;
+    
+
+    if ready
+
+        % Loop to run while in the scanning phase
+        while app.isScanning
+            if toc(elapsedTime) >= 0.1
+                doCheck = true;
+                elapsedTime = tic;
+            else
+                doCheck = false;
+            end
+            % Get latest fft vector
+            newData = dataAnalysis(app, doCheck);
+            oldData = app.lastSamples(:, bufferInd);
+    
+            runningSum = runningSum + newData - oldData;
+            app.lastSamples(:, bufferInd) = newData;
+    
+            count = count + 1;
+            numNonZeroFrames = numNonZeroFrames + 1;
+            bufferInd = bufferInd + 1;
+    
+            if bufferInd > numSamples
+                bufferInd = 1;
+            end
+             
+            % Average last n number of samples
+            %toPlot = runningSum / double(min(numNonZeroFrames, numSamples));
+            toPlot = runningSum / double(numSamples);
+    
+            plotting(app, toPlot);
         end
-        % Get latest fft vector
-        newData = dataAnalysis(app, doCheck);
-        oldData = app.lastSamples(:, bufferInd);
-
-        runningSum = runningSum + newData - oldData;
-        app.lastSamples(:, bufferInd) = newData;
-
-        count = count + 1;
-        numNonZeroFrames = numNonZeroFrames + 1;
-        bufferInd = bufferInd + 1;
-
-        if bufferInd > numSamples
-            bufferInd = 1;
-        end
-         
-        % Average last n number of samples
-        %toPlot = runningSum / double(min(numNonZeroFrames, numSamples));
-        toPlot = runningSum / double(numSamples);
-
-        plotting(app, toPlot);
-
-    end
-    if isvalid(app)
-        app.StartCalibrationButton.Enable = 'on';
-        app.ResetButton.Enable = 'on';
+        release(app.sdr);
+        app.sdr = [];
+    else
+        rtlNotConnected(app);
     end
 end
