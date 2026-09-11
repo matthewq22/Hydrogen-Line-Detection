@@ -3,6 +3,7 @@ function scanningLoop(app)
     time = app.ScanLengthSlider.Value;
 
     resetplotview(app.UIAxes);
+    updateVelocityScale(app);
     
     frameLength = app.sdr.SamplesPerFrame / app.sdr.SampleRate;
     

@@ -12,5 +12,6 @@ function rtlNotConnected(app)
     if app.isScanning
         toggleScan(app);
     end
+    app.sdr = [];
     drawnow;
 end

@@ -15,11 +15,8 @@ function calibrate(app)
         toggleAccumulate(app);
     end
     
-    % Configure the RTL-SDR
     ready = config(app);
-
-    disp(ready);
-
+ 
     if ready
         integrationTime = app.CalibrationtimeEditField.Value;
         drawnow;

@@ -3,6 +3,7 @@ function accumulationLoop(app)
     app.StartCalibrationButton.Enable = 'off';
 
     resetplotview(app.UIAxes);
+    updateVelocityScale(app);
     
     elapsedTime = tic;
 
@@ -23,7 +24,6 @@ function accumulationLoop(app)
         
         plotting(app, toPlot);
     end
-    
     if isvalid(app)
         % Re-enable calibration
         app.StartCalibrationButton.Enable = 'on';
