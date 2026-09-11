@@ -26,10 +26,10 @@ function sdrConnected = config(app)
             'OutputDataType', 'double', ...
             'SamplesPerFrame', app.fftSize);
         
-        radioDetails = info(app.sdr); 
-        fprintf("Finished searching\n");
-        disp(radioDetails);
-        
+        info = sdrinfo(app.sdr.RadioAddress);
+        if isempty(info)
+            error("Radio not connected");
+        end
         sdrConnected = true;
     
     catch ME

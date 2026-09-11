@@ -2,6 +2,7 @@ function calibrate(app)
     % To be run on calibrate being pressed: sets up everything needed
     app.ScanButton.Enable = 'off';
     app.AccumulateButton.Enable = 'off';
+    app.WarningsLabel.Visible = 'off';
     app.StartCalibrationButton.Enable = 'off';
     app.ResetButton.Enable = 'off';
     cla(app.UIAxes);
@@ -38,6 +39,5 @@ function calibrate(app)
     else
         app.StartCalibrationButton.Enable = 'on';
     end
-    app.WarningsLabel.Visible = 'off';
 end
 
