@@ -2,8 +2,9 @@ function corrected = dataAnalysis(app, doCheck)
     failure = false;
 
     if doCheck && ~app.bypassHardwareCheck
-        info = sdrinfo(app.sdr.RadioAddress);
-        if isempty(info)
+        %info = sdrinfo(app.sdr.RadioAddress);
+        locked = isLocked(app.sdr);
+        if ~locked
             rtlNotConnected(app);
             corrected = zeros(app.fftSize, 1);
             failure = true;
