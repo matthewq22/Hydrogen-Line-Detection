@@ -42,7 +42,8 @@ Here, figures can be saved to any folder you set. To avoid overwriting files, al
 By default, a check is done to ensure that the RTL-SDR is still connected. However, on some devices this drastically reduces the performance. Choosing to bypass the hardware check will increase the speed however if the app **will** crash if the RTL-SDR is removed. *It will probably crash if the RTL-SDR is removed and the bypass option isn't selected, but it isn't supposed to.*
 
 ## INSTALLER DOWNLOADS
-macOS (1.1): [HLDInstaller_macOS.zip](https://github.com/user-attachments/files/32156451/HLDInstaller_macOS.zip)
+Check in releases to ensure you are downloading latest version.
+macOS (1.2): [HLDInstaller_macOS1.2.zip](https://github.com/user-attachments/files/32157641/HLDInstaller_macOS1.2.zip)
 
 Windows (1.0): [InstallerWindows.zip](https://github.com/user-attachments/files/32156481/InstallerWindows.zip)
 
