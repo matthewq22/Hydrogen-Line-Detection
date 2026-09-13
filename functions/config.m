@@ -8,12 +8,6 @@ function sdrConnected = config(app)
     app.accumData = zeros(app.fftSize, 1);
     app.plotLine = min(app.freq) < app.targetFreq && max(app.freq) > app.targetFreq;
 
-    % Once the centre frequency has been set, it cannot be changed again.
-    % This is because my code is bad. Would be good to fix it
-    app.CentreFrequencySlider.Enable = 'off';
-
-    fprintf("Min freq: %f\nMax freq: %f\n", min(app.freq), max(app.freq));
-
     if ~isempty(app.sdr) && isvalid(app.sdr)
         release(app.sdr); 
         clear app.sdr;
@@ -26,6 +20,7 @@ function sdrConnected = config(app)
             'OutputDataType', 'double', ...
             'SamplesPerFrame', app.fftSize);
         
+        % Check sdr is connected before doing anything else
         info = sdrinfo(app.sdr.RadioAddress);
         if isempty(info)
             error("Radio not connected");
@@ -37,5 +32,4 @@ function sdrConnected = config(app)
         sdrConnected = false;
         rtlNotConnected(app);
     end
-
 end

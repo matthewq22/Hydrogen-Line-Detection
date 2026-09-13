@@ -20,7 +20,6 @@ function calibrate(app)
  
     if ready
         integrationTime = app.CalibrationtimeEditField.Value;
-        drawnow;
 
         % Get the baseline vector
         success = baseCal(app, integrationTime);
@@ -29,6 +28,12 @@ function calibrate(app)
             % Plotting
             createPlots(app);
             plotting(app, app.avgBg);
+            
+            % Reset plots
+            resetplotview(app.UIAxes);
+            updateVelocityScale(app);
+
+            % Enable scanning and accumulating
             app.ScanButton.Enable = 'on';
             app.AccumulateButton.Enable = 'on';
             app.StartCalibrationButton.Enable = 'on';

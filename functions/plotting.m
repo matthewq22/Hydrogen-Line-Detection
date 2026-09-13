@@ -1,5 +1,5 @@
 function plotting(app, toPlot)
-    % 1. Apply Savitzky-Golay filtering if enabled
+    % Apply Savitzky-Golay filtering if enabled
     hydrogenLine = app.HydrogenLineHandle;
     ax1 = app.UIAxes;
     ax2 = app.VelocityAxes;
