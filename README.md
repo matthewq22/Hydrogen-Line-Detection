@@ -23,4 +23,26 @@ To get around this, run `sudo xattr -cr HLDInstaller_macOS` in the directory whe
 ## Operation
 1. Before starting anything, ensure the white LED on the LNA is on. Some trouble shooting options can be found at the end of this document
 2. Set the calibration time, FFT Size and the centre frequency. None of these need to be changed from their default values, however the calibration time can be increased for more precise results. It should be a minimum of 60 seconds.
-3. Locate the Milky Way with a smartphone app such as Stellarium. Point the wok well away from the Milky Way and click calibrate. This will measure the average background radio signals.
+3. Locate the Milky Way with a smartphone app such as Stellarium. Point the wok well away from the Milky Way and click 'Start Calibration'. This will measure the average background radio signal.
+4. After the calibration has been completed, the plot will show the results. There should be a smooth bump near the centre frequency.
+5. To locate the Milky Way precisely, the Scanning mode can be used. Scanning mode will only show the results for up to the last 50 seconds of recorded data. This time can be adjusted using the slider before pressing Scan. Point the wok towards the Milky Way and press Scan. After waiting for roughly the amount of time you selected, check to see if there is a smooth peak near the red hydrogen line. If there is not, adjust the wok and repeat until it can be seen.
+6. Once the Milky Way has been found, Accumulation mode can be used. This will continuously record data and average them, so the hydrogen line peak becomes even clearer.
+7. Adjusting the position of the wok along the milky way, switching between scan and accumulate, will allow for the red and blue shift of the hydrogen line to be observed. Ensure that the Reset button in the accumulation panel is clicked when moving to a different part of the sky.
+
+## Figures panel
+This panel provides a number of options for the display.
+
+#### Smoothing
+This adjusts the Savitzky-Golay smoothing algorithm used, or allows it to be disabled entirely. The Smoothing Order allows the polynomial order to be adjusted, while the Smoothing Frame adjusts the frame length of the algorithm. In this panel there is also the option to remove the red hydrogen line showing the exact frequency of neutral hydrogen.
+
+#### Figure saving
+Here, figures can be saved to any folder you set. To avoid overwriting files, al filenames will have the current time appending to them. For example, if you enter `figure` in the textbox, it will be saved as `figure1234.png` in the directory you set. (Assuming it is 12:34pm)
+
+#### Hardware Check
+By default, a check is done to ensure that the RTL-SDR is still connected. However, on some devices this drastically reduces the performance. Choosing to bypass the hardware check will increase the speed however if the app **will** crash if the RTL-SDR is removed. *It will probably crash if the RTL-SDR is removed and the bypass option isn't selected, but it isn't supposed to.*
+
+## INSTALLER DOWNLOADS
+macOS: [HLDInstaller_macOS.zip](https://github.com/user-attachments/files/32156451/HLDInstaller_macOS.zip)
+windows (old version): 
+
+
