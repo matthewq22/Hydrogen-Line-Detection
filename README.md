@@ -43,6 +43,7 @@ By default, a check is done to ensure that the RTL-SDR is still connected. Howev
 
 ## INSTALLER DOWNLOADS
 Check in releases to ensure you are downloading latest version.
+
 macOS (1.2): [HLDInstaller_macOS1.2.zip](https://github.com/user-attachments/files/32157641/HLDInstaller_macOS1.2.zip)
 
 Windows (1.0): [InstallerWindows.zip](https://github.com/user-attachments/files/32156481/InstallerWindows.zip)
