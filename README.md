@@ -43,6 +43,12 @@ By default, a check is done to ensure that the RTL-SDR is still connected. Howev
 
 ## INSTALLER DOWNLOADS
 macOS: [HLDInstaller_macOS.zip](https://github.com/user-attachments/files/32156451/HLDInstaller_macOS.zip)
-windows (old version): 
 
+Windows (old version): [InstallerWindows.zip](https://github.com/user-attachments/files/32156481/InstallerWindows.zip)
 
+## Troubleshooting
+### LNA not working:
+If the LED on the LNA is not on:
+1. Check the small red LED on the side of the RTL-SDR is on. For the V4, this will be near the input connected (the side not connected to the laptop). If this is ON, then the issue is between the RTL-SDR and the LNA (step 2). If off, then there is no power being sent to the LNA (step 3).
+2. Check the LNA is connected correctly. The input side should be connected to the wok, and the output should be connected to the RTL-SDR. If this is the case, check all wires are securely connected.
+3. If no power is being sent to the LNA, then a bias T option needs to be switched on. Using a dedicated radio receiving app, such as sdr++, this option can be manually switched on. Close this app. and open sdr++ or alternatives. Select the device, and switch on bias T. The red and white LEDs should turn on. After this, close sdr++ before opening this app, and the LNA will remain powered.
