@@ -1,5 +1,5 @@
-# Full setup and operational instructions
-A comprehensive guide on how to detect the 21cm hydrogen line of the milky way using amateur equipment.
+# Quick Installation and setup guide
+This is a brief guide, giving just enough information to get you started. The full guide can be found at FULL_GUIDE.pdf
 ### Before starting, ensure you have the following
 * RTL-SDR
 * LNA with hydrogen filter
@@ -13,10 +13,12 @@ My setup used a nooelec SAWBird+ H1t as the LNA and an RTL-SDR V4, however other
 2. Connect the input side of the LNA directly to the antenna from the wok
 3. Run a cable from the LNA output to the RTL-SDR, then by USB connect the RTL-SDR to a laptop
 
+The final setup should look like Wok -> LNA -> RTL-SDR -> Laptop
+
 ## Software setup
 1. Download the installer at the end of this document
 2. On macOS, a warning may appear when opening the installer saying it is damaged.
-To get around this, run `sudo xattr -cr HLDInstaller_macOS` in the directory where the installer is.
+To get around this, type `sudo xattr -cr ` in the terminal and then drag and drop the installer in.
 3. Follow the installer instructions. MATLAB runtime will automatically be installed
 4. For some devices, a driver may be needed for the RTL-SDR. These can be found online.
 
@@ -28,18 +30,6 @@ To get around this, run `sudo xattr -cr HLDInstaller_macOS` in the directory whe
 5. To locate the Milky Way precisely, the Scanning mode can be used. Scanning mode will only show the results for up to the last 50 seconds of recorded data. This time can be adjusted using the slider before pressing Scan. Point the wok towards the Milky Way and press Scan. After waiting for roughly the amount of time you selected, check to see if there is a smooth peak near the red hydrogen line. If there is not, adjust the wok and repeat until it can be seen.
 6. Once the Milky Way has been found, Accumulation mode can be used. This will continuously record data and average them, so the hydrogen line peak becomes even clearer.
 7. Adjusting the position of the wok along the milky way, switching between scan and accumulate, will allow for the red and blue shift of the hydrogen line to be observed. Ensure that the Reset button in the accumulation panel is clicked when moving to a different part of the sky.
-
-## Figures panel
-This panel provides a number of options for the display.
-
-#### Smoothing
-This adjusts the Savitzky-Golay smoothing algorithm used, or allows it to be disabled entirely. The Smoothing Order allows the polynomial order to be adjusted, while the Smoothing Frame adjusts the frame length of the algorithm. In this panel there is also the option to remove the red hydrogen line showing the exact frequency of neutral hydrogen.
-
-#### Figure saving
-Here, figures can be saved to any folder you set. To avoid overwriting files, al filenames will have the current time appending to them. For example, if you enter `figure` in the textbox, it will be saved as `figure1234.png` in the directory you set. (Assuming it is 12:34pm)
-
-#### Hardware Check
-By default, a check is done to ensure that the RTL-SDR is still connected. However, on some devices this drastically reduces the performance. Choosing to bypass the hardware check will increase the speed however if the app **will** crash if the RTL-SDR is removed. *It will probably crash if the RTL-SDR is removed and the bypass option isn't selected, but it isn't supposed to.*
 
 ## INSTALLER DOWNLOADS
 Check in releases to ensure you are downloading latest version.
